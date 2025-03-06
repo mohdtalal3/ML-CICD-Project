@@ -39,7 +39,7 @@ print(df.head())
 # ------------------------------
 
 # Go one folder back and then create the 'data' directory
-parent_dir = os.path.join(os.getcwd(), 'data')  # Goes one level up and then to 'data'
+parent_dir = os.path.join(os.getcwd(), 'data')
 os.makedirs(parent_dir, exist_ok=True)
 
 # Define the path to the CSV file
