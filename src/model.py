@@ -64,7 +64,7 @@ def plot_decision_boundary(model, X, y):
     plt.show()
 
 def main():
-    config_path = os.path.join("..", "config.json")
+    config_path = os.path.join("config.json")
 
     # Load configuration parameters from config.json
     with open(config_path, "r") as f:
@@ -79,7 +79,7 @@ def main():
     np.random.seed(random_seed)
     
     # Load the dataset from CSV
-    data_path = os.path.join("..", "data", "synthetic_data.csv")
+    data_path = os.path.join("data", "synthetic_data.csv")
     df = pd.read_csv(data_path)
     print("Dataset loaded from", data_path)
     
@@ -113,9 +113,6 @@ def main():
     test_accuracy = np.mean(test_predictions == y_test)
     print(f"Testing Accuracy: {test_accuracy:.2f}")
     
-    # Display the decision boundary using test data
-    plot_decision_boundary(model, X_test, y_test)
-    
     # Display the trained weights and bias
     print("Trained Weights:", model.weights)
     print("Trained Bias:", model.bias)
@@ -129,16 +126,19 @@ def main():
         "epochs": epochs
     }
     
-    # Define the file path to go one directory level back and save the file
-    file_path = os.path.join("..", "metrics.json")
+    # Define the file path
+    file_path = os.path.join("metrics.json")
 
-    # Ensure the directory exists
-    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+    # Ensure the directory exists (if any), though for current working directory this isn't necessary
+    os.makedirs(os.path.dirname(os.path.abspath(file_path)), exist_ok=True)
 
     # Saving the metrics to the file
     with open(file_path, "w") as f:
         json.dump(metrics, f, indent=4)
     print("Metrics saved to metrics.json")
 
+    # Display the decision boundary using test data
+    # plot_decision_boundary(model, X_test, y_test)
+    
 if __name__ == '__main__':
     main()
