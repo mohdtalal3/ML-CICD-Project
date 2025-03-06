@@ -64,8 +64,10 @@ def plot_decision_boundary(model, X, y):
     plt.show()
 
 def main():
+    config_path = os.path.join("..", "config.json")
+
     # Load configuration parameters from config.json
-    with open("config.json", "r") as f:
+    with open(config_path, "r") as f:
         config = json.load(f)
 
     train_ratio = config.get("train_ratio", 0.8)
@@ -127,7 +129,14 @@ def main():
         "epochs": epochs
     }
     
-    with open("metrics.json", "w") as f:
+    # Define the file path to go one directory level back and save the file
+    file_path = os.path.join("..", "metrics.json")
+
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
+
+    # Saving the metrics to the file
+    with open(file_path, "w") as f:
         json.dump(metrics, f, indent=4)
     print("Metrics saved to metrics.json")
 
