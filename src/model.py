@@ -3,6 +3,7 @@ import pandas as pd
 import json
 import matplotlib.pyplot as plt
 import os
+import joblib
 
 
 # Define the Perceptron class (Rosenblatt Perceptron)
@@ -161,6 +162,12 @@ def main():
 
     # Display the decision boundary using test data
     # plot_decision_boundary(model, X_test, y_test)
+
+    model_dir = os.path.join("model")
+    os.makedirs(model_dir, exist_ok=True)
+    model_file_path = os.path.join(model_dir, "perceptron_model.pkl")
+    joblib.dump(model, model_file_path)
+    print("Model saved to", model_file_path)
 
 
 if __name__ == '__main__':
