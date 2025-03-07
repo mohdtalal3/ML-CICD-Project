@@ -1,0 +1,9 @@
+{
+  "train_ratio": 0.8,
+  "test_ratio": 0.2,
+  "random_seed": 42,
+  "perceptron": {
+    "learning_rate": 0.05,
+    "epochs": 20
+  }
+}

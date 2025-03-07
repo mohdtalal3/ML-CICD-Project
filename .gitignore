@@ -1,0 +1,10 @@
+/tests/.pytest_cache/
+/tests/__pycache__/
+/tests/test_*.py
+/tests/test_*.pyc
+/tests/test_*.pyo
+/tests/test_*.pyd
+
+/model
+
+/secrets.txt
