@@ -45,14 +45,14 @@ pipeline {
         success {
             emailext (
                 subject: "Deployment Successful: ${env.JOB_NAME}",
-                body: "The deployment of ${env.JOB_NAME} on branch ${env.BRANCH_NAME} was successful.",
+                body: "Deployment on branch ${env.BRANCH_NAME} was successful.",
                 to: 'fanasfarooq8888@gmail.com'
             )
         }
         failure {
             emailext (
                 subject: "Deployment Failed: ${env.JOB_NAME}",
-                body: "The deployment of ${env.JOB_NAME} on branch ${env.BRANCH_NAME} has failed.",
+                body: "Deployment on branch ${env.BRANCH_NAME} has failed.",
                 to: 'fanasfarooq8888@gmail.com'
             )
         }
