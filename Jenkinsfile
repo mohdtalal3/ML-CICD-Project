@@ -41,21 +41,23 @@ pipeline {
         always {
             // Clean up Docker environment after the job
             sh 'docker rmi mohdtalal3/flask-perceptron-app:latest || true'
-           }
-        success {
-            // Send a success email notification
+
+            // Send an email notification with HTML body
             emailext (
-                subject: "Deployment Successful: ${env.JOB_NAME}",
-                body: "The deployment of ${env.JOB_NAME} on branch ${env.BRANCH_NAME} was successful.",
-                to: 'fanasfarooq8888@gmail.com'
-            )
-        }
-        failure {
-            // Send a failure email notification
-            emailext (
-                subject: "Deployment Failed: ${env.JOB_NAME}",
-                body: "The deployment of ${env.JOB_NAME} on branch ${env.BRANCH_NAME} has failed.",
-                to: 'fanasfarooq8888@gmail.com'
+                subject: "Pipeline Status: ${env.BUILD_NUMBER}",
+                body: """
+                    <html>
+                        <body>
+                            <p>Build Status: ${currentBuild.currentResult}</p>
+                            <p>Build Number: ${env.BUILD_NUMBER}</p>
+                            <p>Check the <a href="${env.BUILD_URL}">console output</a> for details.</p>
+                        </body>
+                    </html>
+                """,
+                to: 'fanasfarooq8888@gmail.com',
+                from: 'jenkins@example.com',
+                replyTo: 'jenkins@example.com',
+                mimeType: 'text/html'
             )
         }
     }
