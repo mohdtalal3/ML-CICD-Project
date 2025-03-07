@@ -43,20 +43,19 @@ pipeline {
             sh 'docker rmi mohdtalal3/flask-perceptron-app:latest || true'
            }
         success {
+            // Send a success email notification
             emailext (
                 subject: "Deployment Successful: ${env.JOB_NAME}",
-                body: "Deployment on branch ${env.BRANCH_NAME} was successful.",
-                to: 'fanasfarooq8888@gmail.com',
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']],
-                mimeType: 'text/html'
+                body: "The deployment of ${env.JOB_NAME} on branch ${env.BRANCH_NAME} was successful.",
+                to: 'fanasfarooq8888@gmail.com'
             )
         }
         failure {
+            // Send a failure email notification
             emailext (
                 subject: "Deployment Failed: ${env.JOB_NAME}",
-                body: "Deployment on branch ${env.BRANCH_NAME} has failed.",
-                to: 'fanasfarooq8888@gmail.com',
-                mimeType: 'text/html'
+                body: "The deployment of ${env.JOB_NAME} on branch ${env.BRANCH_NAME} has failed.",
+                to: 'fanasfarooq8888@gmail.com'
             )
         }
     }
