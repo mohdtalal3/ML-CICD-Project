@@ -29,10 +29,12 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Log in to Docker Hub using the stored credentials
-                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-                    // Push the Docker image to Docker Hub
-                    sh "docker push mohdtalal3/flask-perceptron-app:latest"
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub_credentials', passwordVariable: 'DOCKERHUB_PSW', usernameVariable: 'DOCKERHUB_USR')]) {
+                        // Log in to Docker Hub securely
+                        sh "echo \$DOCKERHUB_PSW | docker login -u \$DOCKERHUB_USR --password-stdin"
+                        // Push the Docker image to Docker Hub
+                        sh "docker push mohdtalal3/flask-perceptron-app:latest"
+                    }
                 }
             }
         }
