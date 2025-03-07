@@ -6,3 +6,5 @@
 /tests/test_*.pyd
 
 /model
+
+/secrets.txt
