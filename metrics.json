@@ -1,0 +1,10 @@
+{
+    "train_accuracy": 0.985,
+    "test_accuracy": 0.99,
+    "trained_weights": [
+        0.3497551439235459,
+        -0.19741484299543666
+    ],
+    "trained_bias": -0.2664573705700096,
+    "epochs": 20
+}
