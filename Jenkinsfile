@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     environment {
         // Load the Docker Hub credentials stored in Jenkins
         DOCKERHUB_CREDENTIALS = credentials('dockerhub_credentials')
@@ -13,7 +13,11 @@ pipeline {
                 checkout scm
             }
         }
-
+        stage('Verify Docker') {
+            steps {
+                sh 'docker --version'
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script {
@@ -22,42 +26,34 @@ pipeline {
                 }
             }
         }
-
         stage('Push Docker Image') {
             steps {
                 script {
                     // Log in to Docker Hub using the stored credentials
-                    sh """
-                        echo ${DOCKERHUB_CREDENTIALS_USR} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin
-                    """
+                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
                     // Push the Docker image to Docker Hub
                     sh "docker push mohdtalal3/flask-perceptron-app:latest"
                 }
             }
         }
     }
-
     post {
         always {
             // Clean up Docker environment after the job
             sh 'docker rmi mohdtalal3/flask-perceptron-app:latest || true'
-        }
-        
+           }
         success {
-            // Send an email notification upon a successful build/deployment
             emailext (
                 subject: "Deployment Successful: ${env.JOB_NAME}",
                 body: "The deployment of ${env.JOB_NAME} on branch ${env.BRANCH_NAME} was successful.",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                to: 'fanasfarooq8888@gmail.com'
             )
         }
-        
         failure {
-            // Optionally, notify on failure
             emailext (
                 subject: "Deployment Failed: ${env.JOB_NAME}",
                 body: "The deployment of ${env.JOB_NAME} on branch ${env.BRANCH_NAME} has failed.",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                to: 'fanasfarooq8888@gmail.com'
             )
         }
     }
